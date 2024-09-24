@@ -1,4 +1,4 @@
-const sidebarToggleBtn = document.querySelector(".fa-bars-staggered");
+const sidebarToggleBtn = document.querySelector(".fa-bars");
 const sidebar = document.getElementById("logo-sidebar");
 const mainContent = document.querySelector(".main-content");
 
