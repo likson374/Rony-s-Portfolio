@@ -11,7 +11,7 @@ sidebarToggleBtn.addEventListener("click", (e) => {
 });
 
 mainContent.addEventListener("click", (e) => {
-  console.log("first");
+  //console.log("first");
   if (!sidebar.classList.contains("-translate-x-full")) {
     sidebar.classList.add("-translate-x-full");
     sidebar.classList.remove("translate-x-0");
@@ -91,3 +91,46 @@ certificateTabs.forEach((tab) => {
     document.getElementById(targetId).classList.remove("hidden");
   });
 });
+
+
+
+// Select all research items and modal elements
+const researchItems = document.querySelectorAll('.research-item');
+const modal = document.getElementById('researchModal');
+const modalImage = document.getElementById('modalImage');
+const modalTitle = document.getElementById('modalTitle');
+const modalLink = document.getElementById('modalLink');
+const closeModal = document.getElementById('closeModal');
+
+// Add event listeners to research items
+researchItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const image = item.getAttribute('data-image');
+    const title = item.getAttribute('data-title');
+    const link = item.getAttribute('data-link');
+
+    // Set modal content
+    modalImage.src = image;
+    modalTitle.textContent = title;
+    modalLink.href = link;
+
+    // Show modal
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  });
+});
+
+// Close modal on click of close button
+closeModal.addEventListener('click', () => {
+  modal.classList.remove('flex');
+  modal.classList.add('hidden');
+});
+
+// Close modal if user clicks outside the modal content
+window.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.classList.remove('flex');
+    modal.classList.add('hidden');
+  }
+});
+
