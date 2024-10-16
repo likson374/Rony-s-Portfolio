@@ -91,10 +91,50 @@ certificateTabs.forEach((tab) => {
     document.getElementById(targetId).classList.remove("hidden");
   });
 });
+// Select all the certificate items and modal elements
+const certificateItems = document.querySelectorAll('.c-item');
+const modal = document.getElementById('imageModal');
+console.log(modal)
+const modalImage = document.getElementById('modalImage');
+const closeModalButton = document.getElementById('closeModal');
+
+// Function to open modal with the clicked image
+function openModal(imageSrc) {
+  modalImage.src = imageSrc;
+  modal.classList.remove('hidden');
+  document.body.classList.add('overflow-hidden');
+}
+
+// Function to close the modal
+function closeModal() {
+  modal.classList.add('hidden');
+  document.body.classList.remove('overflow-hidden');
+}
+
+// Add event listeners to certificate items
+certificateItems.forEach((item) => {
+  //console.log(item)
+  const img = item.querySelector('img');
+  const button = item.querySelector('button');
+
+  // Open modal when image or button is clicked
+  img.addEventListener('click', () => openModal(img.src));
+  button.addEventListener('click', () => openModal(img.src));
+});
+
+// Event listener to close modal
+closeModalButton.addEventListener('click', closeModal);
+
+// Close modal when clicking outside the image
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    closeModal();
+  }
+});
 
 
 
-// Select all research items and modal elements
+
 // Select all research items and lightbox elements
 const researchItems = document.querySelectorAll('.research-item');
 const lightbox = document.getElementById('lightbox');
@@ -110,10 +150,11 @@ let currentIndex = 0;
 // Function to show the lightbox for the selected item
 function showLightbox(index) {
   const selectedItem = researchItems[index];
-  const image = selectedItem.getAttribute('data-image');
-  const title = selectedItem.getAttribute('data-title');
-  const link = selectedItem.getAttribute('data-link');
-  
+  console.log(selectedItem)
+  const image = selectedItem.querySelector('img').src;
+  const title = selectedItem.querySelector('img').dataset.title;
+  const link = selectedItem.querySelector('img').dataset.link;
+
   // Set lightbox content
   lightboxImage.src = image;
   lightboxTitle.textContent = title;
@@ -153,16 +194,10 @@ closeLightbox.addEventListener('click', hideLightbox);
 nextImage.addEventListener('click', showNextImage);
 prevImage.addEventListener('click', showPrevImage);
 
-// Event listener for clicking on research items
+// Event listener for clicking on "Show Details" buttons
 researchItems.forEach((item, index) => {
-  item.addEventListener('click', () => showLightbox(index));
-});
-
-// Close the lightbox if the user clicks outside the image
-lightbox.addEventListener('click', (event) => {
-  if (event.target === lightbox) {
-    hideLightbox();
-  }
+  const showDetailsBtn = item.querySelector('.show-details-btn');
+  showDetailsBtn.addEventListener('click', () => showLightbox(index));
 });
 
 // Handle keyboard navigation for lightbox
@@ -177,3 +212,5 @@ document.addEventListener('keydown', (event) => {
     }
   }
 });
+
+// bg-opacity-75
